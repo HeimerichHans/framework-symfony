@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\LoginAuthenticator;
@@ -31,7 +32,11 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-
+            
+            $user->setActif(true);
+            $user->setCreatedDate(new DateTime('now'));
+            $user->setUpdatedDate(new DateTime('now'));
+            
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
