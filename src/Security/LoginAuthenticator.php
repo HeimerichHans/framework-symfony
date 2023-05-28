@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use SebastianBergmann\Environment\Console;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,13 +45,8 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
     {
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
-        }
-        $role = $request->request->get('roles', '');
-        if($role == "ROLE_ADMIN"){
-            return new RedirectResponse($this->urlGenerator->generate('admin'));
-        }else{
-            return new RedirectResponse($this->urlGenerator->generate('homepage'));
-        }      
+        }       
+        return new RedirectResponse($this->urlGenerator->generate('homepage'));     
     }
 
     protected function getLoginUrl(Request $request): string
