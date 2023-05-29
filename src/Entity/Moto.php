@@ -44,6 +44,12 @@ class Moto
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
+    #[ORM\Column(length: 8192)]
+    private ?string $article = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $dateArticle = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -164,6 +170,30 @@ class Moto
     public function setImage(string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getArticle(): ?string
+    {
+        return $this->article;
+    }
+
+    public function setArticle(string $article): self
+    {
+        $this->article = $article;
+
+        return $this;
+    }
+
+    public function getDateArticle(): ?\DateTimeInterface
+    {
+        return $this->dateArticle;
+    }
+
+    public function setDateArticle(\DateTimeInterface $dateArticle): self
+    {
+        $this->dateArticle = $dateArticle;
 
         return $this;
     }
