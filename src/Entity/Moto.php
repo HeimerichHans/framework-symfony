@@ -7,8 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: MotoRepository::class)]
+#[Vich\Uploadable]
 class Moto
 {
     #[ORM\Id]
@@ -41,14 +44,20 @@ class Moto
     #[ORM\JoinColumn(nullable: false)]
     private ?ListType $type = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'string', length: 255)]
     private ?string $image = null;
+
+    #[Vich\UploadableField(mapping: 'moto', fileNameProperty: 'image')]
+    private ?File $imageFile = null;
 
     #[ORM\Column(length: 8192)]
     private ?string $article = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $dateArticle = null;
+    private ?\DateTimeInterface $createdDate = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $updatedDate = null;
 
     public function __construct()
     {
@@ -174,6 +183,22 @@ class Moto
         return $this;
     }
 
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedDate = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
     public function getArticle(): ?string
     {
         return $this->article;
@@ -186,14 +211,26 @@ class Moto
         return $this;
     }
 
-    public function getDateArticle(): ?\DateTimeInterface
+    public function getCreatedDate(): ?\DateTimeInterface
     {
-        return $this->dateArticle;
+        return $this->createdDate;
     }
 
-    public function setDateArticle(\DateTimeInterface $dateArticle): self
+    public function setCreatedDate(\DateTimeInterface $createdDate): self
     {
-        $this->dateArticle = $dateArticle;
+        $this->createdDate = $createdDate;
+
+        return $this;
+    }
+
+    public function getUpdatedDate(): ?\DateTimeInterface
+    {
+        return $this->updatedDate;
+    }
+
+    public function setUpdatedDate(\DateTimeInterface $updatedDate): self
+    {
+        $this->updatedDate = $updatedDate;
 
         return $this;
     }

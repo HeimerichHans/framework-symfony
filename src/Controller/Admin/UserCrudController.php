@@ -3,7 +3,13 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+use DateTime;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 
 class UserCrudController extends AbstractCrudController
 {
@@ -15,10 +21,18 @@ class UserCrudController extends AbstractCrudController
     /*
     public function configureFields(string $pageName): iterable
     {
+        
         return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
+            IdField::new('id')->hideOnForm(),
+            TextField::new('email'),
+            TextField::new('nom'),
+            TextField::new('prenom'),
+            TextField::new('pseudo'),
+            TextField::new('password')->hideOnIndex(),
+            ArrayField::new('roles'),
+            BooleanField::new('actif'),
+            DateTimeField::new('createdDate')->hideOnForm(),
+            DateTimeField::new('updatedDate')->hideOnForm(),
         ];
     }
     */
