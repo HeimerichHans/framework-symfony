@@ -2,14 +2,14 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Color;
+use App\Entity\ListCylinder;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
-class ColorCrudController extends AbstractCrudController
+class ListCylinderCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Color::class;
+        return ListCylinder::class;
     }
 
     /*
