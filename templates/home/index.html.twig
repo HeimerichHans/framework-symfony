@@ -2,3 +2,42 @@
 
 {% block title %}Acceuil{% endblock %}
 
+{% block body %}
+    <div class="section search-result-wrap">
+        <div class="container">
+            <div class="row posts-entry">
+                <div class="col-lg-8">
+
+                    {% for moto in motos %}
+
+                        <div class="blog-entry d-flex blog-entry-search-item">
+                            <a href="" class="img-link me-4">
+                                <img src="{{ asset('uploads/images/' ~ moto.image) }}" alt="Image" class="img-fluid">
+                            </a>
+                            <div>
+                                <span class="date">{{ moto.createdDate.format('d F, Y') }} &bullet; <a href="#">{{ moto.type }}</a></span>
+                                <h2><a href="">Thought you loved Python? Wait until you meet Rust</a></h2>
+                                <p>{{ moto.article }}</p>
+                                <p><a href="" class="btn btn-sm btn-outline-primary">Read More</a></p>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+
+                    <div class="row text-start pt-5 border-top">
+                        <div class="col-md-12">
+                            <div class="custom-pagination">
+                                <span>1</span>
+                                <a href="#">2</a>
+                                <a href="#">3</a>
+                                <a href="#">4</a>
+                                <span>...</span>
+                                <a href="#">15</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
