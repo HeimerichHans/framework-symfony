@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Moto;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,9 +17,22 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class MotoRepository extends ServiceEntityRepository
 {
+    public const PAGINATOR_PER_PAGE = 4;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Moto::class);
+    }
+
+    public function getMotoPaginator(int $offset): Paginator
+    {
+        $query = $this->createQueryBuilder('m')
+            ->setMaxResults(self::PAGINATOR_PER_PAGE)
+            ->setFirstResult($offset)
+            ->orderBy('m.updatedDate','DESC')
+            ->getQuery()
+        ;
+        return new Paginator($query);
     }
 
     public function save(Moto $entity, bool $flush = false): void

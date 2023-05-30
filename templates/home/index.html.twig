@@ -7,32 +7,68 @@
         <div class="container">
             <div class="row posts-entry">
                 <div class="col-lg-8">
-
                     {% for moto in motos %}
-
                         <div class="blog-entry d-flex blog-entry-search-item">
                             <a href="" class="img-link me-4">
                                 <img src="{{ asset('uploads/images/' ~ moto.image) }}" alt="Image" class="img-fluid">
                             </a>
                             <div>
                                 <span class="date">{{ moto.createdDate.format('d F, Y') }} &bullet; <a href="#">{{ moto.type }}</a></span>
-                                <h2><a href="">Thought you loved Python? Wait until you meet Rust</a></h2>
+                                <h2><a href="">{{moto.marque}} - {{moto.modele}} | {{moto.cylindre}}</a></h2>
                                 <p>{{ moto.article }}</p>
                                 <p><a href="" class="btn btn-sm btn-outline-primary">Read More</a></p>
                             </div>
-                        </div>
-
+                        </div>                
                     {% endfor %}
-
+                    
                     <div class="row text-start pt-5 border-top">
                         <div class="col-md-12">
                             <div class="custom-pagination">
-                                <span>1</span>
-                                <a href="#">2</a>
-                                <a href="#">3</a>
-                                <a href="#">4</a>
-                                <span>...</span>
-                                <a href="#">15</a>
+                                <!-- Fleche precedent -->
+                                {% if page > 1 %}
+                                    <a href="{{ path('homepage', { page: page - 1 }) }}"><</a>
+                                {% endif %}
+
+                                <!-- ... pour sauter les pages precedente-->
+                                {% if page >= 5 %}
+                                    {% if ((((page * numbermotoparpage) - 3) / 15)|round(0,'floor')) * 15 == 0 %}
+                                        {% set buffer = 1 %}
+                                    {% else %}
+                                        {% set buffer = ((((page * numbermotoparpage) - 3) / 15)|round(0,'floor')) * 15 %}
+                                    {% endif %}
+                                    <a href="{{ path('homepage', { page: buffer }) }}">
+                                        {{ buffer }}
+                                    </a>
+                                    <span>...</span>
+                                {% endif %}
+
+                                <!-- 3 pages avant celle selectionner -->
+                                {% for i in (page - 2)..(page - 1) %}
+                                    {% if i > 0 %}
+                                        <a href="{{ path('homepage', { page: i }) }}">{{i}}</a>
+                                    {% endif %}
+                                {% endfor %}
+                                <span>{{page}}</span>
+
+                                <!-- 2 pages après celle selectionner -->
+                                {% for i in (page + 1)..(page + 2) %}
+                                    {% if (i - 1) * numbermotoparpage < motos|length %}
+                                        <a href="{{ path('homepage', { page: i }) }}">{{i}}</a>
+                                    {% endif %}
+                                {% endfor %}
+
+                                <!-- ... pour sauter les pages suivante -->
+                                {% if page * numbermotoparpage + 3 < ((motos|length / 15)|round(0,'floor')) * 15 %}
+                                    <span>...</span>
+                                    <a href="{{ path('homepage', { page: ((((page * numbermotoparpage) + 3) / 15)|round(0,'ceil')) * 15 }) }}">
+                                        {{ ((((page * numbermotoparpage) + 3) / 15)|round(0,'ceil')) * 15 }}
+                                    </a>
+                                {% endif %}
+
+                                <!-- Fleche suivant -->
+                                {% if page * numbermotoparpage < motos|length %}
+                                    <a href="{{ path('homepage', { page: page + 1 }) }}">></a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

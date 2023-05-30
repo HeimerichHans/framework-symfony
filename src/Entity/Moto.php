@@ -37,9 +37,6 @@ class Moto
     #[ORM\JoinColumn(nullable: false)]
     private ?ListBrand $marque = null;
 
-    #[ORM\OneToMany(mappedBy: 'moto', targetEntity: Comments::class)]
-    private Collection $comments;
-
     #[ORM\ManyToOne(inversedBy: 'motos')]
     #[ORM\JoinColumn(nullable: false)]
     private ?ListType $type = null;
@@ -61,7 +58,7 @@ class Moto
 
     public function __construct()
     {
-        $this->comments = new ArrayCollection();
+        
     }
 
     public function getId(): ?int
@@ -125,36 +122,6 @@ class Moto
     public function setMarque(?ListBrand $marque): self
     {
         $this->marque = $marque;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Comments>
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
-
-    public function addComment(Comments $comment): self
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments->add($comment);
-            $comment->setMoto($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComment(Comments $comment): self
-    {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getMoto() === $this) {
-                $comment->setMoto(null);
-            }
-        }
 
         return $this;
     }
