@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil - Utilisateur{% endblock %}
+
+{% block body %}
+    <section class="section">
+        <div class="container">
+            <div class="row element-animate">
+                <div class="bio">
+                <img src="{{ asset('assets/images/sans_avatar.jpg') }}" alt="Image Placeholder" class="img-fluid mb-3">
+                <button type="submit" class="btn btn-lg btn-primary">Changer de photo</button>
+                <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+                    <form method="post">
+                        <div class="col-12 mb-3">
+                            <label for="name">Pseudonyme</label>
+                            <input readonly class='form-control' Placeholder="{{app.user.pseudo}}">                    
+                        </div>
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <label for="name">Nom</label>
+                                <input readonly class='form-control' Placeholder="{{app.user.nom}}">
+                            </div>
+
+                            <div class="col-6 mb-3">
+                                <label for="name">Prenom</label>s
+                                <input class='form-control' Placeholder="{{app.user.prenom}}">
+                            </div>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label for="name">Email</label>
+                            <input class='form-control' Placeholder="{{app.user.email}}">                    
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label for="name">Date creation du profil</label>
+                            <input class='form-control' Placeholder="{{ app.user.createdDate.format('d F, Y H:m') }}">                    
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label for="name">Mot de passe</label>
+                            <input class='form-control' Placeholder="{{ app.user.password }}">                    
+                        </div>
+                        {{ form_start(UpdateForm) }}
+                        <div class="col-12 mb-3">
+                            {{ form_row(UpdateForm.password.first, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            {{ form_row(UpdateForm.password.second, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <button type="submit" class="btn btn-lg btn-primary">Changer mot de passe</button>
+                        {{ form_end(UpdateForm) }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
