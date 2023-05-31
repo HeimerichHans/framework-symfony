@@ -17,7 +17,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class MotoRepository extends ServiceEntityRepository
 {
-    public const PAGINATOR_PER_PAGE = 4;
+    public const PAGINATOR_PER_PAGE = 1;
 
     public function __construct(ManagerRegistry $registry)
     {

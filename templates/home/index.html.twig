@@ -31,10 +31,10 @@
 
                                 <!-- ... pour sauter les pages precedente-->
                                 {% if page >= 5 %}
-                                    {% if ((((page * numbermotoparpage) - 3) / 15)|round(0,'floor')) * 15 == 0 %}
+                                    {% if ((page - 4) / 15)|round(0,'floor') * 15 == 0 %}
                                         {% set buffer = 1 %}
                                     {% else %}
-                                        {% set buffer = ((((page * numbermotoparpage) - 3) / 15)|round(0,'floor')) * 15 %}
+                                        {% set buffer = ((page - 4 ) / 15)|round(0,'floor') * 15 %}
                                     {% endif %}
                                     <a href="{{ path('homepage', { page: buffer }) }}">
                                         {{ buffer }}
@@ -58,10 +58,10 @@
                                 {% endfor %}
 
                                 <!-- ... pour sauter les pages suivante -->
-                                {% if page * numbermotoparpage + 3 < ((motos|length / 15)|round(0,'floor')) * 15 %}
+                                {% if ((page + 4 ) * numbermotoparpage < motos|length ) and ( motos|length / numbermotoparpage >= 15 ) %}
                                     <span>...</span>
-                                    <a href="{{ path('homepage', { page: ((((page * numbermotoparpage) + 3) / 15)|round(0,'ceil')) * 15 }) }}">
-                                        {{ ((((page * numbermotoparpage) + 3) / 15)|round(0,'ceil')) * 15 }}
+                                    <a href="{{ path('homepage', { page: (page / 15)|round(0,'ceil') * 15 }) }}">
+                                        {{ ((page +4)/ 15)|round(0,'ceil') * 15 }}
                                     </a>
                                 {% endif %}
 
