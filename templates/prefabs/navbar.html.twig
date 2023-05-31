@@ -40,12 +40,6 @@
                                                 <li><a href="{{ path('admin') }} ">Administration</a></li>                                                                                
                                             {% endif %}
                                             <li><a href="{{ path('app_logout') }}">Se deconnecter</a></li>
-                                            <!-- Exemple de vérification de connetion -->
-                                            <!--
-                                            <div class="mb-3">
-                                                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-                                            </div>
-                                            -->
                                         {% else %}
                                             <li><a href="{{ path('app_login') }}">Se connecter</a></li>
                                         {% endif %}
