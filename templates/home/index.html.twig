@@ -9,18 +9,19 @@
                 <div class="col-lg-8">
                     {% for moto in motos %}
                         <div class="blog-entry d-flex blog-entry-search-item">
-                            <a href="" class="img-link me-4">
+                            <a href="detail\{{ moto.id }}" class="img-link me-4">
                                 <img src="{{ asset('uploads/images/' ~ moto.image) }}" alt="Image" class="img-fluid">
                             </a>
                             <div>
                                 <span class="date">{{ moto.createdDate.format('d F, Y') }} &bullet; <a href="#">{{ moto.type }}</a></span>
-                                <h2><a href="">{{moto.marque}} - {{moto.modele}} | {{moto.cylindre}}</a></h2>
+                                <h2><a href="detail\{{ moto.id }}">{{moto.marque}} - {{moto.modele}} | {{moto.cylindre}}</a></h2>
                                 <p>{{ moto.article }}</p>
-                                <p><a href="" class="btn btn-sm btn-outline-primary">Read More</a></p>
+                                <p><a href="detail\{{ moto.id }}" class="btn btn-sm btn-outline-primary">Read More</a></p>
                             </div>
                         </div>                
                     {% endfor %}
                     
+                    <!-- Pagination -->
                     <div class="row text-start pt-5 border-top">
                         <div class="col-md-12">
                             <div class="custom-pagination">
