@@ -44,9 +44,15 @@
                             <label for="name">Email</label>
                             <input class='form-control' Placeholder="{{app.user.email}}">                    
                         </div>
-                        <div class="col-12 mb-3">
-                            <label for="name">Date creation du profil</label>
-                            <input class='form-control' Placeholder="{{ app.user.createdDate.format('d F, Y H:m') }}">                    
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <label for="name">Date creation du profil</label>
+                                <input class='form-control' Placeholder="{{ app.user.createdDate.format('d F, Y H:m') }}">                    
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label for="name">Date mise a jour du profil</label>
+                                <input class='form-control' Placeholder="{{ app.user.updatedDate.format('d F, Y H:m') }}">                    
+                            </div>
                         </div>
                         <div class="col-12 mb-3">
                             <label for="name">Mot de passe</label>
