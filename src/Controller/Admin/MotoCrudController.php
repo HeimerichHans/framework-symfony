@@ -30,7 +30,7 @@ class MotoCrudController extends AbstractCrudController
         yield TextField::new('modele');           
         yield AssociationField::new('couleur');
         yield AssociationField::new('cylindre');
-        yield TextField::new('imageFile')->setFormType(VichImageType::class);
+        yield TextField::new('imageFile')->setFormType(VichImageType::class)->onlyWhenCreating();
         yield ImageField::new('image')->setBasePath('/uploads/images/moto')->onlyOnIndex();
         yield IntegerField::new('annee');
         yield TextareaField::new('article');
