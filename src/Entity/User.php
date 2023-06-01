@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Entity\Comments;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -52,17 +53,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $updatedDate = null;
 
-    #[ORM\OneToMany(mappedBy: 'auteur', targetEntity: Comments::class)]
-    private Collection $moto;
-
-    #[ORM\OneToMany(mappedBy: 'auteur', targetEntity: Comments::class)]
-    private Collection $comments;
+    #[ORM\OneToMany(mappedBy: 'userComments', targetEntity: Comments::class)]
+    private Collection $commentairesUser;
 
     public function __construct()
     {
-        $this->moto = new ArrayCollection();
-        $this->comments = new ArrayCollection();
         $this->createdDate = new DateTime('now');
+        $this->commentairesUser = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -207,38 +204,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function __toString(): string
+    {
+        return $this->pseudo;
+    }
+
     /**
      * @return Collection<int, Comments>
      */
-    public function getComments(): Collection
+    public function getCommentairesUser(): Collection
     {
-        return $this->comments;
+        return $this->commentairesUser;
     }
 
-    public function addComment(Comments $comment): self
+    public function addCommentairesUser(Comments $commentairesUser): self
     {
-        if (!$this->comments->contains($comment)) {
-            $this->comments->add($comment);
-            $comment->setAuteur($this);
+        if (!$this->commentairesUser->contains($commentairesUser)) {
+            $this->commentairesUser->add($commentairesUser);
+            $commentairesUser->setUserComments($this);
         }
 
         return $this;
     }
 
-    public function removeComment(Comments $comment): self
+    public function removeCommentairesUser(Comments $commentairesUser): self
     {
-        if ($this->comments->removeElement($comment)) {
+        if ($this->commentairesUser->removeElement($commentairesUser)) {
             // set the owning side to null (unless already changed)
-            if ($comment->getAuteur() === $this) {
-                $comment->setAuteur(null);
+            if ($commentairesUser->getUserComments() === $this) {
+                $commentairesUser->setUserComments(null);
             }
         }
 
         return $this;
-    }
-
-    public function __toString(): string
-    {
-        return $this->id.' '.$this->email.' '.$this->nom;
     }
 }

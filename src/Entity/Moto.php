@@ -56,9 +56,12 @@ class Moto
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updatedDate = null;
 
+    #[ORM\OneToMany(mappedBy: 'motoComments', targetEntity: Comments::class)]
+    private Collection $commentairesMoto;
+
     public function __construct()
     {
-        
+        $this->commentairesMoto = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -198,6 +201,41 @@ class Moto
     public function setUpdatedDate(\DateTimeInterface $updatedDate): self
     {
         $this->updatedDate = $updatedDate;
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return (string) $this->getMarque().' '.$this->getmodele().' '.$this->getAnnee();
+    }
+
+    /**
+     * @return Collection<int, Comments>
+     */
+    public function getCommentairesMoto(): Collection
+    {
+        return $this->commentairesMoto;
+    }
+
+    public function addCommentairesMoto(Comments $commentairesMoto): self
+    {
+        if (!$this->commentairesMoto->contains($commentairesMoto)) {
+            $this->commentairesMoto->add($commentairesMoto);
+            $commentairesMoto->setMotoComments($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentairesMoto(Comments $commentairesMoto): self
+    {
+        if ($this->commentairesMoto->removeElement($commentairesMoto)) {
+            // set the owning side to null (unless already changed)
+            if ($commentairesMoto->getMotoComments() === $this) {
+                $commentairesMoto->setMotoComments(null);
+            }
+        }
 
         return $this;
     }

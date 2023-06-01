@@ -3,8 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\CommentsRepository;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\User;
 
 #[ORM\Entity(repositoryClass: CommentsRepository::class)]
 class Comments
@@ -14,35 +16,28 @@ class Comments
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'comments')]
-    private ?user $auteur = null;
-
     #[ORM\Column(length: 4096)]
     private ?string $texte = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
-   
-    #[ORM\JoinColumn(nullable: false)]
-    private ?moto $moto = null;
 
-    #[ORM\ManyToOne(inversedBy: 'moto')]
+    #[ORM\ManyToOne(inversedBy: 'commentairesMoto')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Moto $motoComments = null;
+
+    #[ORM\ManyToOne(inversedBy: 'commentairesUser')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $userComments = null;
+
+    public function __construct()
+    {
+        $this->date = new DateTime('now');
+    }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getAuteur(): ?user
-    {
-        return $this->auteur;
-    }
-
-    public function setAuteur(?user $auteur): self
-    {
-        $this->auteur = $auteur;
-
-        return $this;
     }
 
     public function getTexte(): ?string
@@ -69,14 +64,31 @@ class Comments
         return $this;
     }
 
-    public function getMoto(): ?moto
+    public function __toString(): string
     {
-        return $this->moto;
+        return $this->texte;
     }
 
-    public function setMoto(?moto $moto): self
+    public function getMotoComments(): ?Moto
     {
-        $this->moto = $moto;
+        return $this->motoComments;
+    }
+
+    public function setMotoComments(?Moto $motoComments): self
+    {
+        $this->motoComments = $motoComments;
+
+        return $this;
+    }
+
+    public function getUserComments(): ?User
+    {
+        return $this->userComments;
+    }
+
+    public function setUserComments(?User $userComments): self
+    {
+        $this->userComments = $userComments;
 
         return $this;
     }
