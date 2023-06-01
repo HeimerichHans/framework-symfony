@@ -7,10 +7,10 @@
         <div class="container">
             <div class="row element-animate">
                 <div class="bio">
-                    <div class="row">                       
+                    <div class="row">                      
                         <div class="col-2 align-items-center">
                             {% if Pp_exist %}
-                                <img src="{{ asset('uploads/images/pp/0.png') }}" alt="Image Placeholder" class="img-fluid">
+                                <img src="{{ asset('uploads/images/pp/' ~ app.user.id ~ '.png') }}" alt="Image Placeholder" class="img-fluid">
                             {% else %}
                                 <img src="{{ asset('assets/images/sans_avatar.jpg') }}" alt="Image Placeholder" class="img-fluid">
                             {% endif %}

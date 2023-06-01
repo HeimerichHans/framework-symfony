@@ -23,7 +23,7 @@ class ProfilController extends AbstractController
     #[Route('/profil/{id}', name: 'profil')]
     public function profil(Request $request,User $user, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, LoginAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
-        $ppExist = file_exists($this->getParameter('kernel.project_dir') . '/public/uploads/images/pp/' . $user->getId().".jpg");
+        $ppExist = file_exists($this->getParameter('kernel.project_dir') . '/public/uploads/images/pp/' . $user->getId().".png");
         $formPP = $this->createForm(UploadPPFormType::class);
         $formPP->handleRequest($request);
 
@@ -31,8 +31,7 @@ class ProfilController extends AbstractController
             $imageFile = $formPP->get('imageFile')->getData();
 
             if ($imageFile) {
-                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $newFilename = $originalFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+                $newFilename = $user->getId().'.'.$imageFile->guessExtension();
 
                 // Déplacez le fichier vers le répertoire de stockage
                 $imageFile->move(
@@ -43,8 +42,6 @@ class ProfilController extends AbstractController
                 // Vous pouvez enregistrer le nom du fichier dans la base de données
                 // ou effectuer d'autres opérations selon vos besoins
             }
-
-            // Redirigez ou effectuez d'autres opérations après l'upload réussi
         }
 
         $form = $this->createForm(ProfilFormType::class, $user);

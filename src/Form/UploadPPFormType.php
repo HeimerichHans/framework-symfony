@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class UploadPPFormType extends AbstractType
 {
@@ -14,6 +15,14 @@ class UploadPPFormType extends AbstractType
         $builder
             ->add('imageFile', FileType::class, [
                 'label' => ' ',
+                'constraints' => [
+                    new File([
+                        'mimeTypes' => [
+                            'image/png'
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid PNG'
+                    ])
+                ]
             ]);
     }
 
