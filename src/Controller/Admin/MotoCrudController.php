@@ -31,7 +31,7 @@ class MotoCrudController extends AbstractCrudController
         yield AssociationField::new('couleur');
         yield AssociationField::new('cylindre');
         yield TextField::new('imageFile')->setFormType(VichImageType::class);
-        yield ImageField::new('image')->setBasePath('/uploads/images')->onlyOnIndex();
+        yield ImageField::new('image')->setBasePath('/uploads/images/moto')->onlyOnIndex();
         yield IntegerField::new('annee');
         yield TextareaField::new('article');
         $createdDate = DateTimeField::new('createdDate','Date création');

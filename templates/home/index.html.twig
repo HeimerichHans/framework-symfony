@@ -10,7 +10,7 @@
                     {% for moto in motos %}
                         <div class="blog-entry d-flex blog-entry-search-item">
                             <a href="{{ path('detail',{id: moto.id}) }}" class="img-link me-4">
-                                <img src="{{ asset('uploads/images/' ~ moto.image) }}" alt="Image" class="img-fluid">
+                                <img src="{{ asset('uploads/images/moto/' ~ moto.image) }}" alt="Image" class="img-fluid">
                             </a>
                             <div>
                                 <span class="date">{{ moto.createdDate.format('d F, Y') }} &bullet; <a href="#">{{ moto.type }}</a></span>
