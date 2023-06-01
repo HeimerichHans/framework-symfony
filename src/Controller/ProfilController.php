@@ -5,8 +5,11 @@ namespace App\Controller;
 use App\Form\ProfilFormType;
 use DateTime;
 use App\Entity\User;
+use App\Form\UploadPPFormType;
+use App\Form\ImageUploadType;
 use App\Security\LoginAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Id;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +23,30 @@ class ProfilController extends AbstractController
     #[Route('/profil/{id}', name: 'profil')]
     public function profil(Request $request,User $user, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, LoginAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
+        $ppExist = file_exists($this->getParameter('kernel.project_dir') . '/public/uploads/images/pp/' . $user->getId().".jpg");
+        $formPP = $this->createForm(UploadPPFormType::class);
+        $formPP->handleRequest($request);
+
+        if ($formPP->isSubmitted() && $formPP->isValid()) {
+            $imageFile = $formPP->get('imageFile')->getData();
+
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                // Déplacez le fichier vers le répertoire de stockage
+                $imageFile->move(
+                    $this->getParameter('upload_dir'),
+                    $newFilename
+                );
+
+                // Vous pouvez enregistrer le nom du fichier dans la base de données
+                // ou effectuer d'autres opérations selon vos besoins
+            }
+
+            // Redirigez ou effectuez d'autres opérations après l'upload réussi
+        }
+
         $form = $this->createForm(ProfilFormType::class, $user);
         $form->handleRequest($request);
 
@@ -47,6 +74,8 @@ class ProfilController extends AbstractController
 
         return $this->render('profil/index.html.twig', [
             'UpdateForm' => $form->createView(),
+            'UploadForm' => $formPP->createView(),
+            'Pp_exist' => $ppExist,
         ]);
     }
 }

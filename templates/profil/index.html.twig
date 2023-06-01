@@ -7,8 +7,22 @@
         <div class="container">
             <div class="row element-animate">
                 <div class="bio">
-                <img src="{{ asset('assets/images/sans_avatar.jpg') }}" alt="Image Placeholder" class="img-fluid mb-3">
-                <button type="submit" class="btn btn-lg btn-primary">Changer de photo</button>
+                    <div class="row">                       
+                        <div class="col-2 align-items-center">
+                            {% if Pp_exist %}
+                                <img src="{{ asset('uploads/images/pp/0.png') }}" alt="Image Placeholder" class="img-fluid">
+                            {% else %}
+                                <img src="{{ asset('assets/images/sans_avatar.jpg') }}" alt="Image Placeholder" class="img-fluid">
+                            {% endif %}
+                        </div>
+                        <div class="col-6">
+                            {{ form_start(UploadForm) }}
+                                {{ form_widget(UploadForm, {'attr': {'class': 'form-widget mb-2 mt-4'}}) }}
+                                <button type="submit" class="btn btn-lg btn-primary">Changer de photo</button>
+                            {{ form_end(UploadForm) }} 
+                        </div>              
+                    </div>   
+                </div> 
                 <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
                     <form method="post">
                         <div class="col-12 mb-3">
