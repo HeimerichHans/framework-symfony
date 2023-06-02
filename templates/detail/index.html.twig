@@ -34,7 +34,7 @@
                             {% for comment in comments %}
                                 <li class="comment">
                                     <div class="vcard">
-                                        <img src="{{ asset('uploads/images/pp/' ~ comment.userComments.id ~ '.png' ) }}" alt="Image">
+                                        <img src="{{ asset('uploads/images/pp/' ~ comment.userComments.id ) }}" alt="Image">
                                     </div>
                                     <div class="comment-body">
                                         <h3>{{ comment.userComments }}</h3>

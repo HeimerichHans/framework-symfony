@@ -24,7 +24,7 @@ class ProfilController extends AbstractController
     public function profil(Request $request,User $user, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, LoginAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         //On regarde si l'utilisateur possède une image de profil puis l'envoie au twig
-        $ppExist = file_exists($this->getParameter('kernel.project_dir') . '/public/uploads/images/pp/' . $user->getId().".png");
+        $ppExist = file_exists($this->getParameter('kernel.project_dir') . '/public/uploads/images/pp/' . $user->getId());
         
         $formPP = $this->createForm(UploadPPFormType::class);
         $formPP->handleRequest($request);
@@ -33,7 +33,7 @@ class ProfilController extends AbstractController
             $imageFile = $formPP->get('imageFile')->getData();
 
             if ($imageFile) {
-                $newFilename = $user->getId().'.'.$imageFile->guessExtension();
+                $newFilename = $user->getId();
 
                 // Déplacez le fichier vers le répertoire de stockage
                 $imageFile->move(

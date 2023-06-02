@@ -18,9 +18,12 @@ class UploadPPFormType extends AbstractType
                 'constraints' => [
                     new File([
                         'mimeTypes' => [
-                            'image/png'
+                            'image/png',
+                            'image/jpg',
+                            'image/gif',
+                            'image/webp',
                         ],
-                        'mimeTypesMessage' => 'Please upload a valid PNG'
+                        'mimeTypesMessage' => 'Please upload a valid File'
                     ])
                 ]
             ]);

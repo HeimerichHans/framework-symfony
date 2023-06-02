@@ -10,7 +10,7 @@
                     <div class="row mb-3">                      
                         <div class="col-2 align-items-center">
                             {% if Pp_exist %}
-                                <img src="{{ asset('uploads/images/pp/' ~ app.user.id ~ '.png') }}" alt="Image Placeholder" class="img-fluid">
+                                <img src="{{ asset('uploads/images/pp/' ~ app.user.id) }}" alt="Image Placeholder" class="img-fluid">
                             {% else %}
                                 <img src="{{ asset('assets/images/sans_avatar.jpg') }}" alt="Image Placeholder" class="img-fluid">
                             {% endif %}
@@ -53,10 +53,6 @@
                                 <label for="name">Date mise a jour du profil</label>
                                 <input class='form-control' Placeholder="{{ app.user.updatedDate.format('d F, Y H:m') }}">                    
                             </div>
-                        </div>
-                        <div class="col-12 mb-3">
-                            <label for="name">Mot de passe</label>
-                            <input class='form-control' Placeholder="{{ app.user.password }}">                    
                         </div>
                         {{ form_start(UpdateForm) }}
                         <div class="col-12 mb-3">
