@@ -15,7 +15,7 @@
                             <div>
                                 <span class="date">{{ moto.createdDate.format('d F, Y') }} &bullet; <a href="#">{{ moto.type }}</a></span>
                                 <h2><a href="{{ path('detail',{id: moto.id}) }}">{{moto.marque}} - {{moto.modele}} | {{moto.cylindre}}</a></h2>
-                                <p>{{ moto.article }}</p>
+                                <p>{{ moto.article| slice(0, 50) ~ (moto.article|length > 50 ? '...' : '') }}</p>
                                 
                                 <p><a href="{{ path('detail',{id: moto.id}) }}" class="btn btn-sm btn-outline-primary">Read More</a></p>
                             </div>
