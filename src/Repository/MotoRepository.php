@@ -24,14 +24,25 @@ class MotoRepository extends ServiceEntityRepository
         parent::__construct($registry, Moto::class);
     }
 
-    public function getMotoPaginator(int $offset): Paginator
+    public function getMotoPaginator(int $offset, string $typeFilter, string $filter): Paginator
     {
-        $query = $this->createQueryBuilder('m')
-            ->setMaxResults(self::PAGINATOR_PER_PAGE)
-            ->setFirstResult($offset)
-            ->orderBy('m.updatedDate','DESC')
-            ->getQuery()
-        ;
+        if (in_array($typeFilter, ['couleur', 'cylindre', 'marque', 'type'])) {
+            $query = $this->createQueryBuilder('m')
+                ->leftJoin('m.'.$typeFilter,'r')
+                ->andWhere('r.'.$typeFilter.' = :filter')
+                ->setParameter('filter', $filter)
+                ->setMaxResults(self::PAGINATOR_PER_PAGE)
+                ->setFirstResult($offset)
+                ->orderBy('m.updatedDate', 'DESC')
+                ->getQuery();
+        }else{
+            $query = $this->createQueryBuilder('m')
+                ->setMaxResults(self::PAGINATOR_PER_PAGE)
+                ->setFirstResult($offset)
+                ->orderBy('m.updatedDate','DESC')
+                ->getQuery()
+            ;
+        }
         return new Paginator($query);
     }
 

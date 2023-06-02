@@ -19,7 +19,7 @@
 
                     <!-- Catégories et Tag -->
                     <div class="pt-5">
-                        <p>Categories:  <a href="#">{{moto.type}}</a>  Tags: <a href="#">#{{moto.cylindre}}</a>, <a href="#">#{{moto.marque}}</a></p>
+                        <p>Categories:  <a href="{{ path('homepage', {type: "type", filter: moto.type }) }}">{{moto.type}}</a>  Tags: <a href="{{ path('homepage', {type: "cylindre", filter: moto.cylindre }) }}">#{{moto.cylindre}}</a>, <a href="{{ path('homepage', {type: "marque", filter: moto.marque }) }}">#{{moto.marque}}</a></p>
                     </div>
                     
                     <!-- Zone commentaires -->

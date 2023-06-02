@@ -3,3 +3,17 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+homepage:
+    path: /home/{type}/{filter}
+    controller: App\Controller\HomeController::index
+    defaults:
+        type: 'null'
+        filter: 'null'
+
+home_redirect:
+    path: /
+    controller: App\Controller\HomeController::index
+    defaults:
+        type: 'null'
+        filter: 'null'

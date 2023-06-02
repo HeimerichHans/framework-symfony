@@ -13,7 +13,7 @@
                                 <img src="{{ asset('uploads/images/moto/' ~ moto.image) }}" alt="Image" class="img-fluid">
                             </a>
                             <div>
-                                <span class="date">{{ moto.createdDate.format('d F, Y') }} &bullet; <a href="#">{{ moto.type }}</a></span>
+                                <span class="date">{{ moto.createdDate.format('d F, Y') }} &bullet; <a href="{{ path('homepage', {type: "type", filter: moto.type }) }}">{{ moto.type }}</a></span>
                                 <h2><a href="{{ path('detail',{id: moto.id}) }}">{{moto.marque}} - {{moto.modele}} | {{moto.cylindre}}</a></h2>
                                 <p>{{ moto.article| slice(0, 50) ~ (moto.article|length > 50 ? '...' : '') }}</p>
                                 
@@ -28,7 +28,7 @@
                             <div class="custom-pagination">
                                 <!-- Fleche precedent -->
                                 {% if page > 1 %}
-                                    <a href="{{ path('homepage', { page: page - 1 }) }}"><</a>
+                                    <a href="{{ path('homepage', { page: page - 1, type: type, filter: filter}) }}"><</a>
                                 {% endif %}
 
                                 <!-- ... pour sauter les pages precedente-->
@@ -38,7 +38,7 @@
                                     {% else %}
                                         {% set buffer = ((page - 4 ) / 15)|round(0,'floor') * 15 %}
                                     {% endif %}
-                                    <a href="{{ path('homepage', { page: buffer }) }}">
+                                    <a href="{{ path('homepage', { page: buffer , type: type, filter: filter}) }}">
                                         {{ buffer }}
                                     </a>
                                     <span>...</span>
@@ -47,7 +47,7 @@
                                 <!-- 3 pages avant celle selectionner -->
                                 {% for i in (page - 2)..(page - 1) %}
                                     {% if i > 0 %}
-                                        <a href="{{ path('homepage', { page: i }) }}">{{i}}</a>
+                                        <a href="{{ path('homepage', { page: i , type: type, filter: filter}) }}">{{i}}</a>
                                     {% endif %}
                                 {% endfor %}
                                 <span>{{page}}</span>
@@ -55,21 +55,21 @@
                                 <!-- 2 pages après celle selectionner -->
                                 {% for i in (page + 1)..(page + 2) %}
                                     {% if (i - 1) * numbermotoparpage < motos|length %}
-                                        <a href="{{ path('homepage', { page: i }) }}">{{i}}</a>
+                                        <a href="{{ path('homepage', { page: i , type: type, filter: filter}) }}">{{i}}</a>
                                     {% endif %}
                                 {% endfor %}
 
                                 <!-- ... pour sauter les pages suivante -->
                                 {% if ((page + 4 ) * numbermotoparpage < motos|length ) and ( motos|length / numbermotoparpage >= 15 ) %}
                                     <span>...</span>
-                                    <a href="{{ path('homepage', { page: (page / 15)|round(0,'ceil') * 15 }) }}">
+                                    <a href="{{ path('homepage', { page: (page / 15)|round(0,'ceil') * 15 , type: type, filter: filter}) }}">
                                         {{ ((page +4)/ 15)|round(0,'ceil') * 15 }}
                                     </a>
                                 {% endif %}
 
                                 <!-- Fleche suivant -->
                                 {% if page * numbermotoparpage < motos|length %}
-                                    <a href="{{ path('homepage', { page: page + 1 }) }}">></a>
+                                    <a href="{{ path('homepage', { page: page + 1 , type: type, filter: filter}) }}">></a>
                                 {% endif %}
                             </div>
                         </div>
