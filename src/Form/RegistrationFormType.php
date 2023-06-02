@@ -27,7 +27,7 @@ class RegistrationFormType extends AbstractType
             ->add('nom', TextType::class,[
                 'constraints' => [
                     new NotBlank([
-                        'message'=>'Le message ne doit pas être vide',
+                        'message'=>'Le nom ne doit pas être vide',
                     ]),
                     new Length([
                         'min' => 2,
@@ -40,7 +40,7 @@ class RegistrationFormType extends AbstractType
             ->add('prenom', TextType::class,[
                 'constraints' => [
                     new NotBlank([
-                        'message'=>'Le message ne doit pas être vide',
+                        'message'=>'Le prenom ne doit pas être vide',
                     ]),
                     new Length([
                         'min' => 2,
@@ -53,7 +53,7 @@ class RegistrationFormType extends AbstractType
             ->add('pseudo', TextType::class,[
                 'constraints' => [
                     new NotBlank([
-                        'message'=>'Le message ne doit pas être vide',
+                        'message'=>'Le pseudo ne doit pas être vide',
                     ]),
                     new Length([
                         'min' => 2,
