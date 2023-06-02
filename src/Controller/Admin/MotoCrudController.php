@@ -33,7 +33,7 @@ class MotoCrudController extends AbstractCrudController
         yield TextField::new('imageFile')->setFormType(VichImageType::class)->onlyWhenCreating();
         yield ImageField::new('image')->setBasePath('/uploads/images/moto')->onlyOnIndex();
         yield IntegerField::new('annee');
-        yield TextareaField::new('article');
+        yield TextareaField::new('article')->onlyWhenCreating();
         $createdDate = DateTimeField::new('createdDate','Date création');
         if (Crud::PAGE_EDIT === $pageName) {
             yield $createdDate->setFormTypeOption('disabled', true);
