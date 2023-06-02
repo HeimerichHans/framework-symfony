@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class HomeController extends AbstractController
 {
-    public function index(?string $type = null, ?string $filter = null, Request $request, Environment $twig, MotoRepository $motoRepository): Response
+    public function index(Request $request, Environment $twig, MotoRepository $motoRepository, ?string $type = null, ?string $filter = null): Response
     {
         $page = max(0, $request->query->getInt('page', 1));
         $paginator = $motoRepository->getMotoPaginator(MotoRepository::PAGINATOR_PER_PAGE*($page-1),($type != null) ? ($type) : ('null'),($filter != null) ? ($filter) : ('null'));
