@@ -48,15 +48,19 @@
                         <!-- Form Commentaire -->
                         <div class="comment-form-wrap pt-5">
                             <h3 class="mb-2">Laisser un commentaire</h3>
-                            <form action="#" class="p-4 bg-light">
+                            <form method="post" action="#" class="p-4 bg-light">
                                 {% if app.user %}
-                                    <div class="form-group">
-                                        <label for="message">Message</label>
-                                        <textarea name="" id="message" cols="30" rows="10" class="form-control"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="submit" value="Post Comment" class="btn btn-primary">
-                                    </div>
+                                    <form method="post">
+                                        {{ form_start(MessageForm) }}
+                                            <div class="form-group">
+                                                    <label for="message">Message</label>
+                                                    {{ form_widget(MessageForm.texte) }}                                                               
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="submit" value="Poster Message" class="btn btn-primary">
+                                            </div>
+                                        {{ form_end(MessageForm) }}
+                                    </form>
                                 {% else %}
                                     <div class="row">
                                         <div class="col-4 mb-3">
